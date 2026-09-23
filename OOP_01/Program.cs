@@ -11,6 +11,12 @@
             Street = street;
             BuildingNumber = buildingNumber;
         }
+        public DeliveryAddress(string street)
+        {
+            Street = street;
+            City = "New York";
+            BuildingNumber = 1;
+        }
         public string GetFullAddress()
         {
             return $"{BuildingNumber} {Street} ,{City}";
@@ -268,6 +274,11 @@
             if (!isShipmentfound)
                 Console.WriteLine("No Shipment Found!!");
             //Struct Copy Behaviour
+            DeliveryAddress address01 = new DeliveryAddress("Cairo", "Mostafa Al Nahas", 53);
+            DeliveryAddress address02 = address01;
+            address02 = new DeliveryAddress("Freedom St.");
+            Console.WriteLine(address01.GetFullAddress());
+            Console.WriteLine(address02.GetFullAddress());
         }
     }
 }

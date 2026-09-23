@@ -157,7 +157,7 @@
         //Print Shipment Method
         public string PrintShipmentDetails()
         {
-            return $"Tracking Code: {TrackingCode}, Description: {Description}, Weight: {Weight}kg, Delivery Fee: {deliveryFee}, Estimated Cost: {EstimatedCost} ";
+            return $"Tracking Code:\n{TrackingCode}\nDescription:\n{Description}\nWeight:\n{Weight}kg\nDelivery Fee:\n{deliveryFee}\nEstimated Cost:\n{EstimatedCost}";
         }
         
         
@@ -226,18 +226,32 @@
         static void Main(string[] args)
         {
             DeliveryCenter center = new DeliveryCenter();
-            for(int i = 0; i < 3; i++) 
+            //Reading Shipment Data and adding it to delivery center
+            for (int i = 0; i < 3; i++)
             {
-                Console.WriteLine($"Enter Shipment{i+1} data");
-                Console.WriteLine("Tracking Code:");
+                Console.WriteLine($"Enter Shipment{i + 1} data");
+                Console.Write("Tracking Code:");
                 string trackingcode = Console.ReadLine();
-                Console.WriteLine("Description:");
+                Console.Write("Description:");
                 string description = Console.ReadLine();
-                Console.WriteLine("Weight:");
+                Console.Write("Weight:");
                 int weight = int.Parse(Console.ReadLine());
-                Console.WriteLine("Delivery Fee:");
+                Console.Write("Delivery Fee:");
                 decimal deliveryfee = decimal.Parse(Console.ReadLine());
+                Shipment shipment = new Shipment(trackingcode, description, weight, deliveryfee);
+                center.AddShipment(shipment);
+                Console.WriteLine("\n\nShipment Added Successfully");
 
             }
+            //Printing Shipments using integer indexer
+            Console.WriteLine("---All Shipments");
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"Shipment {i + 1} data");
+                Console.WriteLine(center[i].PrintShipmentDetails());
+                Console.WriteLine("////////////////////////////");
+            }
+        }
     }
 }

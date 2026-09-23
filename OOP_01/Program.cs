@@ -252,6 +252,22 @@
                 Console.WriteLine(center[i].PrintShipmentDetails());
                 Console.WriteLine("////////////////////////////");
             }
+            //Searching using shipment tracking code
+            bool isShipmentfound = false; 
+            Console.WriteLine("Enter a Tracking Code to search:");
+            string searchcode = Console.ReadLine();
+            for (int i = 0; i < 3; i++)
+            {
+                if (center[i].TrackingCode == searchcode)
+                {
+                    isShipmentfound = true;
+                    Console.WriteLine($"Shipment Found: {center[i].TrackingCode}");
+                }
+                   
+            }
+            if (!isShipmentfound)
+                Console.WriteLine("No Shipment Found!!");
+            //Struct Copy Behaviour
         }
     }
 }

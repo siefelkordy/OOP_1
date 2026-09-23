@@ -1,6 +1,4 @@
-﻿
-
-namespace OOP_01
+﻿namespace OOP_01
 {
     public struct DeliveryAddress
     {
@@ -23,7 +21,7 @@ namespace OOP_01
 
 
 
-    internal struct Shipment
+    public struct Shipment
     {
         string trackingCode;
         string description;
@@ -41,7 +39,7 @@ namespace OOP_01
             }
             set
             {
-                if (!string.IsNullOrWhiteSpace(trackingCode) && trackingCode == string.Empty)
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     trackingCode = value;
                 }
@@ -60,7 +58,7 @@ namespace OOP_01
             }
             set
             {
-                if (string.IsNullOrWhiteSpace(description) || description == string.Empty)
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Description cannot be null or empty.");
                 }
@@ -79,7 +77,7 @@ namespace OOP_01
             }
             set
             {
-                if (weight <= 0)
+                if (value <= 0)
                 {
                     throw new ArgumentException("Weight must be a positive number.");
                 }
@@ -169,8 +167,12 @@ namespace OOP_01
     //Delivery Center Struct
     public struct DeliveryCenter
     {
-        Shipment[] shipment = new Shipment[10];
-
+        Shipment[] shipment;
+        public DeliveryCenter()
+        {
+            shipment = new Shipment[10];
+        }
+        //Integer Indexer
         public Shipment this[int index]
         {
             get
@@ -179,6 +181,7 @@ namespace OOP_01
                 {
                     return shipment[index];
                 }
+                return default;
             }
             set
             {
@@ -188,16 +191,53 @@ namespace OOP_01
                 }
             }
         }
-
+        //String Indexer
+        public Shipment this[string trackingcode]
+        {
+            get
+            {
+                for (int i = 0; i < shipment.Length; i++)
+                {
+                    if (shipment[i].TrackingCode == trackingcode)
+                    {
+                        return shipment[i];
+                    }
+                    
+                }
+                return default;
+            }
+        }
+        //AddShipment Method
+        public bool AddShipment(Shipment newshipment)
+        {
+            for (int i = 0; i < shipment.Length; i++)
+            {
+                if (shipment[i].TrackingCode==null)
+                {
+                    shipment[i]=newshipment;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
     internal class Program
     {
         static void Main(string[] args)
         {
-            DeliveryAddress address = new DeliveryAddress("New York", "5th Avenue", 123);
-            DeliveryAddress address1 = address;
-            Console.WriteLine(address.GetFullAddress());
-            Console.WriteLine(address1.GetFullAddress());
-        }
+            DeliveryCenter center = new DeliveryCenter();
+            for(int i = 0; i < 3; i++) 
+            {
+                Console.WriteLine($"Enter Shipment{i+1} data");
+                Console.WriteLine("Tracking Code:");
+                string trackingcode = Console.ReadLine();
+                Console.WriteLine("Description:");
+                string description = Console.ReadLine();
+                Console.WriteLine("Weight:");
+                int weight = int.Parse(Console.ReadLine());
+                Console.WriteLine("Delivery Fee:");
+                decimal deliveryfee = decimal.Parse(Console.ReadLine());
+
+            }
     }
 }
